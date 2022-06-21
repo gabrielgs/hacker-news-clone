@@ -13,11 +13,16 @@ const GlobalStyles = createGlobalStyle`
     font-family: ${({ theme }) => theme.fonts.font1};
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    background: ${({ theme }) => theme.colors.screenBackground};
   }
 
   ul, h1, h2, h3 ,h4 ,h5 ,h6, p {
     margin: 0;
     padding: 0;
+  }
+
+  button {
+    font-family: ${({ theme }) => theme.fonts.font1};
   }
 
   code {
