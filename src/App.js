@@ -1,10 +1,11 @@
 import React from 'react';
+import Theme from './styled/Theme';
 import Header from './components/Header';
 
-function App() {
-  return (
+const App = () => (
+  <Theme>
     <Header />
-  );
-}
+  </Theme>
+);
 
 export default App;
