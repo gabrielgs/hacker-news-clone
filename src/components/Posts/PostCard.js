@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { formatDistance } from 'date-fns';
 import {
@@ -67,10 +67,14 @@ const TimeText = styled.span`
 `;
 
 const PostCard = ({
+  id,
   author,
   title,
   url,
   date,
+  favoritePosts,
+  setFavoritePosts,
+  selectedFramework,
 }) => {
   const [isFavorite, setIsFavorite] = useState(false);
 
@@ -78,7 +82,39 @@ const PostCard = ({
     window.open(url, '_blank', 'noopener, noreferrer');
   };
 
-  const handleFavorite = () => setIsFavorite(!isFavorite);
+  const handleRemoveFavorites = (copyFavorites) => {
+    const updatedFavorites = copyFavorites.filter((favorite) => favorite.objectID !== id);
+    setFavoritePosts(updatedFavorites);
+    setIsFavorite(false);
+  };
+
+  const addToFavorites = (copyFavorites) => {
+    const newPost = {
+      objectID: id,
+      author,
+      story_title: title,
+      story_url: url,
+      created_at: date,
+      framework: selectedFramework,
+    };
+    copyFavorites.push(newPost);
+    setFavoritePosts(copyFavorites);
+    setIsFavorite(true);
+  };
+
+  const handleFavorite = () => {
+    const cloneFavorites = JSON.parse(JSON.stringify(favoritePosts));
+    if (isFavorite) {
+      handleRemoveFavorites(cloneFavorites);
+    } else {
+      addToFavorites(cloneFavorites);
+    }
+  };
+
+  useEffect(() => {
+    const isInFavorites = favoritePosts.some((post) => post.objectID === id);
+    if (isInFavorites) setIsFavorite(true);
+  }, []);
 
   return (
     <Card onClick={handleClick}>
