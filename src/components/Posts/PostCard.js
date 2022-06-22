@@ -117,7 +117,9 @@ const PostCard = ({
   }, []);
 
   return (
-    <Card onClick={handleClick}>
+    <Card
+      onClick={handleClick}
+    >
       <Header>
         <IconContainer>
           <Icon src={TimeIcon} alt="Time Icon" />
