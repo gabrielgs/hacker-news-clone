@@ -30,10 +30,13 @@ const usePosts = (framework) => {
     },
   );
 
-  const dataPosts = result?.data?.pages.reduce(
-    (prevPosts, page) => prevPosts.concat(page.hits),
-    [],
-  ) ?? [];
+  let dataPosts = [];
+  if (framework) {
+    dataPosts = result?.data?.pages.reduce(
+      (prevPosts, page) => prevPosts.concat(page.hits),
+      [],
+    ) ?? [];
+  }
 
   return { ...result, dataPosts };
 };
