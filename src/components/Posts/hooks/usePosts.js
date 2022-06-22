@@ -1,30 +1,41 @@
-import { useQuery } from 'react-query';
+import { useInfiniteQuery } from 'react-query';
 import axios from 'axios';
 
-const getPostsFiltered = (posts) => posts?.filter((post) => (
-  post.author
-  && post.story_title
-  && post.story_url
-  && post.created_at
-));
-
-const fetchPosts = async (query) => {
+const fetchPosts = async (query, pageParam) => {
   const API_URL = 'https://hn.algolia.com/api/v1/search_by_date';
   let response = [];
   if (query) {
-    const { data: { hits } } = await axios.get(API_URL, {
+    const { data } = await axios.get(API_URL, {
       params: {
         query,
-        page: 0,
+        page: pageParam,
         hitsPerPage: 8,
       },
     });
-    response = getPostsFiltered(hits);
+
+    response = data;
   }
 
   return response;
 };
 
-const usePosts = (framework) => useQuery(['posts', framework], () => fetchPosts(framework));
+const usePosts = (framework, activeTab) => {
+  const result = useInfiniteQuery(
+    ['posts', framework],
+    ({ pageParam = 0}) => fetchPosts(framework, activeTab, pageParam),
+    {
+      getNextPageParam: (lastPage) => {
+        return lastPage.page === lastPage.nbPages ? undefined : lastPage.page + 1;
+      },
+    },
+  );
+
+  const dataPosts = result?.data?.pages.reduce(
+    (prevPosts, page) => prevPosts.concat(page.hits),
+    []
+  ) ?? [];
+
+  return {...result, dataPosts };
+};
 
 export default usePosts;

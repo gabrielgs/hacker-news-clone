@@ -6,7 +6,7 @@ import {
 import Header from './components/Header';
 import Main from './components/Main';
 
-const queryClient = new QueryClient();
+export const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>

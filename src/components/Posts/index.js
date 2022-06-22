@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import PostCard from './PostCard';
 import usePosts from './hooks/usePosts';
 import useLocalStorage from '../../hooks/useLocalStorage';
@@ -13,7 +14,11 @@ const ListPosts = styled.div`
 `;
 
 const Posts = ({ selectedFramework, activeTab }) => {
-  const { data } = usePosts(selectedFramework);
+  const {
+    dataPosts,
+    hasNextPage,
+    fetchNextPage,
+  } = usePosts(selectedFramework, activeTab);
   const [favoritePosts, setFavoritePosts] = useLocalStorage(
     'favoritePosts',
     [],
@@ -23,26 +28,36 @@ const Posts = ({ selectedFramework, activeTab }) => {
     ({ framework }) => framework === selectedFramework,
   );
 
-  const posts = activeTab === 'All' ? data : getFavoritePostsFiltered();
+
+  const posts = activeTab === 'All'
+    ? dataPosts
+    : getFavoritePostsFiltered();
 
   return (
     <Wrapper>
       {posts && (
-        <ListPosts>
-          {posts.map((post) => (
-            <PostCard
-              key={post.objectID}
-              id={post.objectID}
-              author={post.author}
-              title={post.story_title}
-              url={post.story_url}
-              date={post.created_at}
-              favoritePosts={favoritePosts}
-              setFavoritePosts={setFavoritePosts}
-              selectedFramework={selectedFramework}
-            />
-          ))}
-        </ListPosts>
+        <InfiniteScroll
+          dataLength={posts.length}
+          hasMore={hasNextPage}
+          next={() => fetchNextPage()}
+          loader="Loading..."
+        >
+          <ListPosts>
+            {posts.map((post) => (
+              <PostCard
+                key={post.objectID}
+                id={post.objectID}
+                author={post.author}
+                title={post.story_title}
+                url={post.story_url}
+                date={post.created_at}
+                favoritePosts={favoritePosts}
+                setFavoritePosts={setFavoritePosts}
+                selectedFramework={selectedFramework}
+              />
+            ))}
+          </ListPosts>
+        </InfiniteScroll>
       )}
     </Wrapper>
   );
