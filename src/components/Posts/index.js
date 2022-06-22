@@ -7,10 +7,25 @@ import useLocalStorage from '../../hooks/useLocalStorage';
 
 const Wrapper = styled.section`
   margin-top: 32px;
+  @media (min-width: 1024px) {
+    margin-top: 38px;
+  }
+  @media (min-width: 1280px) {
+    max-width: 1140px;
+    margin-left: auto;
+    margin-right: auto;
+  }
 `;
 const ListPosts = styled.div`
   display: grid;
   grid-gap: 20px;
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 40px;
+  }
+  @media (min-width: 1280px) {
+    grid-gap: 30px 40px;
+  }
 `;
 
 const Posts = ({ selectedFramework, activeTab }) => {
@@ -18,7 +33,7 @@ const Posts = ({ selectedFramework, activeTab }) => {
     dataPosts,
     hasNextPage,
     fetchNextPage,
-  } = usePosts(selectedFramework, activeTab);
+  } = usePosts(selectedFramework);
   const [favoritePosts, setFavoritePosts] = useLocalStorage(
     'favoritePosts',
     [],
@@ -27,7 +42,6 @@ const Posts = ({ selectedFramework, activeTab }) => {
   const getFavoritePostsFiltered = () => favoritePosts.filter(
     ({ framework }) => framework === selectedFramework,
   );
-
 
   const posts = activeTab === 'All'
     ? dataPosts

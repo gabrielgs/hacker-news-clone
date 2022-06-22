@@ -17,6 +17,15 @@ import useLocalStorage from '../../hooks/useLocalStorage';
 
 const Container = styled.div`
   margin-top: 24px;
+  @media (min-width: 1024px) {
+    margin-top: 42px;
+  }
+  @media (min-width: 1280px) {
+    margin-top: 63px;
+    max-width: 1140px;
+    margin-left: auto;
+    margin-right: auto;
+  }
 `;
 const IconContainer = styled.div`
   display: flex;
@@ -30,6 +39,11 @@ const Icon = styled.img`
   height: 100%;
   object-fit: contain;
 `;
+const CustomSelect = styled(Select)`
+  @media (min-width: 1024px) {
+    max-width: 240px;
+  }
+`
 
 const customStyles = {
   option: (provided) => ({
@@ -139,7 +153,7 @@ const DropdownSelect = ({ setSelectedFramework }) => {
 
   return (
     <Container>
-      <Select
+      <CustomSelect
         options={options}
         components={{ Option }}
         styles={customStyles}

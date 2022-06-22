@@ -6,6 +6,12 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 24px;
+  @media (min-width: 1024px) {
+    margin-top: 48px;
+  }
+  @media (min-width: 1280px) {
+    margin-top: 70px;
+  }
 `;
 const Group = styled.div``;
 
