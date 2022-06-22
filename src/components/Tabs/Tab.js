@@ -6,6 +6,7 @@ const Button = styled.button`
   background: ${({ theme }) => theme.colors.white};
   border: 1px solid ${({ theme }) => theme.colors.borderTab};
   color: ${({ theme }) => theme.colors.defaultTab};
+  cursor: pointer;
   font-size: 16px;
   font-weight: 500;
   line-height: 1.75;
@@ -20,6 +21,13 @@ const Button = styled.button`
     border-left: none;
     border-top-right-radius: 2px;
     border-bottom-right-radius: 2px;
+  }
+  &:hover {
+    border-color: ${({ theme }) => theme.colors.primary};
+    color: ${({ theme }) => theme.colors.primary};
+    &:nth-child(1) {
+      border-right-color: ${({ theme }) => theme.colors.borderTab};
+    }
   }
   ${({ active, theme }) => active && `
     border-color: ${theme.colors.primary};
