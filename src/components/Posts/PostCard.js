@@ -19,6 +19,10 @@ const Card = styled.article`
   justify-content: space-between;
   grid-gap: 6px 16px;
   width: 100%;
+  transition: all .2s ease;
+  &:hover {
+    opacity: 0.4;
+  }
 `;
 const Header = styled.div`
   display: flex;
@@ -62,26 +66,34 @@ const TimeText = styled.span`
   margin-left: 8px;
 `;
 
-const PostCard = () => {
+const PostCard = ({
+  author,
+  title,
+  url,
+  date,
+}) => {
   const [isFavorite, setIsFavorite] = useState(false);
-  const handleFavorite = (e) => {
-    setIsFavorite(!isFavorite);
-  }
 
-  return(
-    <Card>
+  const handleClick = () => {
+    window.open(url, '_blank', 'noopener, noreferrer');
+  };
+
+  const handleFavorite = () => setIsFavorite(!isFavorite);
+
+  return (
+    <Card onClick={handleClick}>
       <Header>
         <IconContainer>
           <Icon src={TimeIcon} alt="Time Icon" />
         </IconContainer>
         <TimeText>
-          {formatDistance(new Date('2022-06-13T23:55:25.000Z'), new Date(), {
+          {`${formatDistance(new Date(date), new Date(), {
             addSuffix: true,
-          })}
+          })} by ${author}`}
         </TimeText>
       </Header>
       <Body>
-        <Text>Event-driven state management in React using Storeon</Text>
+        <Text>{title}</Text>
       </Body>
       <Reaction onClick={(e) => e.stopPropagation()}>
         <FavoriteContainer onClick={handleFavorite}>
