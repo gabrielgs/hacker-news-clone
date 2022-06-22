@@ -19,10 +19,10 @@ const fetchPosts = async (query, pageParam) => {
   return response;
 };
 
-const usePosts = (framework, activeTab) => {
+const usePosts = (framework) => {
   const result = useInfiniteQuery(
     ['posts', framework],
-    ({ pageParam = 0}) => fetchPosts(framework, activeTab, pageParam),
+    ({ pageParam = 0 }) => fetchPosts(framework, pageParam),
     {
       getNextPageParam: (lastPage) => {
         return lastPage.page === lastPage.nbPages ? undefined : lastPage.page + 1;

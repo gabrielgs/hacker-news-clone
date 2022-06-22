@@ -6,6 +6,12 @@ import Posts from './Posts';
 
 const Wrapper = styled.main`
   padding: 0 32px 32px;
+  @media (min-width: 760px) {
+    padding: 0 48px 48px;
+  }
+  @media (min-width: 1024px) {
+    padding: 0 92px 54px;
+  }
 `;
 
 const Main = () => {

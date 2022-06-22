@@ -23,6 +23,9 @@ const Card = styled.article`
   &:hover {
     opacity: 0.4;
   }
+  @media (min-width: 1280px) {
+    height: 90px;
+  }
 `;
 const Header = styled.div`
   display: flex;
