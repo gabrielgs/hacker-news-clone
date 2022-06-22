@@ -24,18 +24,18 @@ const usePosts = (framework) => {
     ['posts', framework],
     ({ pageParam = 0 }) => fetchPosts(framework, pageParam),
     {
-      getNextPageParam: (lastPage) => {
-        return lastPage.page === lastPage.nbPages ? undefined : lastPage.page + 1;
-      },
+      getNextPageParam: (lastPage) => ((lastPage.page === lastPage.nbPages)
+        ? undefined
+        : lastPage.page + 1),
     },
   );
 
   const dataPosts = result?.data?.pages.reduce(
     (prevPosts, page) => prevPosts.concat(page.hits),
-    []
+    [],
   ) ?? [];
 
-  return {...result, dataPosts };
+  return { ...result, dataPosts };
 };
 
 export default usePosts;

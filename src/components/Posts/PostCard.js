@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { formatDistance } from 'date-fns';
 import {
@@ -143,6 +144,25 @@ const PostCard = ({
       </Reaction>
     </Card>
   );
+};
+
+PostCard.propTypes = {
+  id: PropTypes.string.isRequired,
+  author: PropTypes.string,
+  title: PropTypes.string,
+  url: PropTypes.string,
+  date: PropTypes.string,
+  favoritePosts: PropTypes.instanceOf(Array),
+  setFavoritePosts: PropTypes.func.isRequired,
+  selectedFramework: PropTypes.string.isRequired,
+};
+
+PostCard.defaultProps = {
+  author: '',
+  title: '',
+  url: '',
+  date: '',
+  favoritePosts: [],
 };
 
 export default PostCard;

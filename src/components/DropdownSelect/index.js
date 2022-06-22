@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Select, { components } from 'react-select';
 import {
@@ -43,7 +44,7 @@ const CustomSelect = styled(Select)`
   @media (min-width: 1024px) {
     max-width: 240px;
   }
-`
+`;
 
 const customStyles = {
   option: (provided) => ({
@@ -113,13 +114,17 @@ const Option = ({ data, children, ...props }) => {
     }
   };
   return (
+    /* eslint-disable-next-line react/jsx-props-no-spreading */
     <components.Option {...props}>
-      <IconContainer>
-        {getIcon()}
-      </IconContainer>
+      <IconContainer>{getIcon()}</IconContainer>
       {children}
     </components.Option>
   );
+};
+
+Option.propTypes = {
+  data: PropTypes.instanceOf(Object).isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 const DropdownSelect = ({ setSelectedFramework }) => {
@@ -163,6 +168,10 @@ const DropdownSelect = ({ setSelectedFramework }) => {
       />
     </Container>
   );
+};
+
+DropdownSelect.propTypes = {
+  setSelectedFramework: PropTypes.func.isRequired,
 };
 
 export default DropdownSelect;

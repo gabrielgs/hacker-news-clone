@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const Button = styled.button`
@@ -45,6 +46,12 @@ const Tab = ({
       {label}
     </Button>
   );
+};
+
+Tab.propTypes = {
+  label: PropTypes.string.isRequired,
+  activeTab: PropTypes.string.isRequired,
+  setActiveTab: PropTypes.func.isRequired,
 };
 
 export default Tab;
