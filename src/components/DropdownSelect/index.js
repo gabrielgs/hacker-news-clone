@@ -14,7 +14,9 @@ import {
 } from '../../assets/icons/IconRepository';
 import colors from '../../styled/colors';
 
-const Container = styled.div``;
+const Container = styled.div`
+  margin-top: 24px;
+`;
 const IconContainer = styled.div`
   display: flex;
   width: 24px;
@@ -75,7 +77,7 @@ const Option = ({ data, children, ...props }) => {
             alt="Angular"
           />
         );
-      case 'react':
+      case 'reactjs':
         return (
           <Icon
             src={ReactIcon}
@@ -105,21 +107,25 @@ const Option = ({ data, children, ...props }) => {
   );
 };
 
-const DropdownSelect = () => {
+const DropdownSelect = ({ setSelectedFramework }) => {
   const options = [
     {
       value: 'angular',
       label: 'Angular',
     },
     {
-      value: 'react',
-      label: 'React',
+      value: 'reactjs',
+      label: 'Reactjs',
     },
     {
       value: 'vuejs',
       label: 'Vuejs',
     },
   ];
+
+  const handleChange = (option) => {
+    setSelectedFramework(option.value);
+  };
 
   return (
     <Container>
@@ -128,6 +134,7 @@ const DropdownSelect = () => {
         components={{ Option }}
         styles={customStyles}
         placeholder="Select your news"
+        onChange={handleChange}
       />
     </Container>
   );
