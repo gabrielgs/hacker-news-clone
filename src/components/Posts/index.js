@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import PostCard from './PostCard';
@@ -75,6 +76,11 @@ const Posts = ({ selectedFramework, activeTab }) => {
       )}
     </Wrapper>
   );
+};
+
+Posts.propTypes = {
+  selectedFramework: PropTypes.string.isRequired,
+  activeTab: PropTypes.string.isRequired,
 };
 
 export default Posts;
