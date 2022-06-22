@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import Select, { components } from 'react-select';
 import {
@@ -13,6 +13,7 @@ import {
   VueIcon3x,
 } from '../../assets/icons/IconRepository';
 import colors from '../../styled/colors';
+import useLocalStorage from '../../hooks/useLocalStorage';
 
 const Container = styled.div`
   margin-top: 24px;
@@ -108,6 +109,10 @@ const Option = ({ data, children, ...props }) => {
 };
 
 const DropdownSelect = ({ setSelectedFramework }) => {
+  const [filterFramework, setFilterFramework] = useLocalStorage(
+    'selectedFramework',
+    '',
+  );
   const options = [
     {
       value: 'angular',
@@ -124,8 +129,13 @@ const DropdownSelect = ({ setSelectedFramework }) => {
   ];
 
   const handleChange = (option) => {
+    setFilterFramework(option.value);
     setSelectedFramework(option.value);
   };
+
+  useEffect(() => {
+    setSelectedFramework(filterFramework);
+  }, []);
 
   return (
     <Container>
@@ -135,6 +145,7 @@ const DropdownSelect = ({ setSelectedFramework }) => {
         styles={customStyles}
         placeholder="Select your news"
         onChange={handleChange}
+        value={options.find(({ value }) => value === filterFramework)}
       />
     </Container>
   );

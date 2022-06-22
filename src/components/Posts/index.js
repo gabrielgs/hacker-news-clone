@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import PostCard from './PostCard';
 import usePosts from './hooks/usePosts';
+import useLocalStorage from '../../hooks/useLocalStorage';
 
 const Wrapper = styled.section`
   margin-top: 32px;
@@ -12,7 +13,17 @@ const ListPosts = styled.div`
 `;
 
 const Posts = ({ selectedFramework, activeTab }) => {
-  const { data: posts } = usePosts(selectedFramework);
+  const { data } = usePosts(selectedFramework);
+  const [favoritePosts, setFavoritePosts] = useLocalStorage(
+    'favoritePosts',
+    [],
+  );
+
+  const getFavoritePostsFiltered = () => favoritePosts.filter(
+    ({ framework }) => framework === selectedFramework,
+  );
+
+  const posts = activeTab === 'All' ? data : getFavoritePostsFiltered();
 
   return (
     <Wrapper>
@@ -26,6 +37,9 @@ const Posts = ({ selectedFramework, activeTab }) => {
               title={post.story_title}
               url={post.story_url}
               date={post.created_at}
+              favoritePosts={favoritePosts}
+              setFavoritePosts={setFavoritePosts}
+              selectedFramework={selectedFramework}
             />
           ))}
         </ListPosts>
