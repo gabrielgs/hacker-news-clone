@@ -60,12 +60,12 @@ const Posts = ({ selectedFramework, activeTab }) => {
           <ListPosts>
             {posts.map((post) => (
               <PostCard
-                key={post.objectID}
-                id={post.objectID}
-                author={post.author}
-                title={post.story_title}
-                url={post.story_url}
-                date={post.created_at}
+                key={post?.objectID}
+                id={post?.objectID}
+                author={post?.author}
+                title={post?.story_title}
+                url={post?.story_url}
+                date={post?.created_at}
                 favoritePosts={favoritePosts}
                 setFavoritePosts={setFavoritePosts}
                 selectedFramework={selectedFramework}
