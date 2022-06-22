@@ -59,7 +59,7 @@ const customStyles = {
   placeholder: (provided, state) => ({
     ...provided,
     color: state.isFocused
-      ? colors.borderFocusSelect
+      ? colors.text1
       : colors.borderDefaultSelect,
   }),
 };
